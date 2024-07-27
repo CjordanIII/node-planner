@@ -1,5 +1,12 @@
+import Workbench from "../components/workbench/bottom_work_bench/Workbench";
 const WorkBoard = () => {
-  return <div>hello world</div>;
+  return (
+    <div>
+      <div>
+        <Workbench />
+      </div>
+    </div>
+  );
 };
 
 export default WorkBoard;
