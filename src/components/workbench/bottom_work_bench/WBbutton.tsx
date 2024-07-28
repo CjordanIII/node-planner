@@ -1,4 +1,4 @@
-import HamberBars3 from "../../../assets/icons/HamberBars3";
+import HamberBars3 from "../../../assets/icons/Up";
 
 const WBbutton = () => {
   return (

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Background,
+  ControlButton,
   Controls,
   EdgeChange,
   NodeChange,
@@ -15,8 +16,9 @@ import {
 import "@xyflow/react/dist/style.css";
 import { useCallback, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Down from "../assets/icons/Down";
+import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
-
 const initialNodes = [
   {
     id: "1",
@@ -93,8 +95,12 @@ const WorkBoard = () => {
     },
     [nodes, edges]
   );
+
+  const [isWorkbench, setIsWorkbench] = useState(false);
+  console.log(isWorkbench);
+
   return (
-    <div className="h-dvh">
+    <div className={`${isWorkbench ? "h-40" : "h-dvh "} `}>
       <ReactFlow
         onNodesDelete={onNodesDelete}
         nodes={nodes}
@@ -104,10 +110,13 @@ const WorkBoard = () => {
         onConnect={onConnect}
       >
         <Background />
-        <Controls />
-
-        <Workbench />
+        <Controls>
+          <ControlButton onClick={() => setIsWorkbench((prev) => !prev)}>
+            {isWorkbench ? <Down /> : <Up />}
+          </ControlButton>
+        </Controls>
       </ReactFlow>
+      {isWorkbench && <Workbench />}
     </div>
   );
 };
