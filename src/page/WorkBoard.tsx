@@ -12,6 +12,7 @@ import {
   getConnectedEdges,
   getIncomers,
   getOutgoers,
+  useNodeId,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useCallback, useState } from "react";
@@ -21,13 +22,13 @@ import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
 const initialNodes = [
   {
-    id: "1",
+    id: uuidv4(),
     data: { label: "Hello" },
     position: { x: 0, y: 0 },
     type: "input",
   },
   {
-    id: "2",
+    id: uuidv4(),
     data: { label: "World" },
     position: { x: 100, y: 100 },
   },
@@ -36,9 +37,9 @@ const initialNodes = [
 const initialEdges: any[] = [];
 
 const WorkBoard = () => {
-  console.log(uuidv4());
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  const nodeId = useNodeId();
 
   const onNodesChange = useCallback(
     (
@@ -68,7 +69,8 @@ const WorkBoard = () => {
     (params: any) => setEdges((eds) => addEdge(params, eds)),
     []
   );
-
+  // Delete objects
+  console.log(nodeId);
   const onNodesDelete = useCallback(
     (deleted: any[]) => {
       setEdges(
@@ -97,7 +99,6 @@ const WorkBoard = () => {
   );
 
   const [isWorkbench, setIsWorkbench] = useState(false);
-  console.log(isWorkbench);
 
   return (
     <div className={`${isWorkbench ? "h-40" : "h-dvh "} `}>
@@ -108,8 +109,12 @@ const WorkBoard = () => {
         edges={edges}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onClick={(e) => console.log(e)}
       >
         <Background />
+
+        <button style={{ position: "absolute" }}>Click to add node</button>
+
         <Controls>
           <ControlButton onClick={() => setIsWorkbench((prev) => !prev)}>
             {isWorkbench ? <Down /> : <Up />}
