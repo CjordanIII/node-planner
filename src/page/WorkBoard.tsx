@@ -12,7 +12,6 @@ import {
   getConnectedEdges,
   getIncomers,
   getOutgoers,
-  useNodeId,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useCallback, useState } from "react";
@@ -39,7 +38,6 @@ const initialEdges: any[] = [];
 const WorkBoard = () => {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
-  const nodeId = useNodeId();
 
   const onNodesChange = useCallback(
     (
@@ -70,7 +68,7 @@ const WorkBoard = () => {
     []
   );
   // Delete objects
-  console.log(nodeId);
+
   const onNodesDelete = useCallback(
     (deleted: any[]) => {
       setEdges(
@@ -109,11 +107,16 @@ const WorkBoard = () => {
         edges={edges}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onClick={(e) => console.log(e)}
       >
         <Background />
 
-        <button style={{ position: "absolute" }}>Click to add node</button>
+        <button
+          onClick={() => console.log("working")}
+          style={{ zIndex: 1001 }}
+          className="absolute top-8 cursor-pointer btn"
+        >
+          Click to add node
+        </button>
 
         <Controls>
           <ControlButton onClick={() => setIsWorkbench((prev) => !prev)}>
