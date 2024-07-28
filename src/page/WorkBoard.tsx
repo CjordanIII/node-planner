@@ -14,26 +14,12 @@ import {
   getOutgoers,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useCallback, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useCallback, useEffect, useState } from "react";
 import Down from "../assets/icons/Down";
 import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
-const initialNodes = [
-  {
-    id: uuidv4(),
-    data: { label: "Hello" },
-    position: { x: 0, y: 0 },
-    type: "input",
-  },
-  {
-    id: uuidv4(),
-    data: { label: "World" },
-    position: { x: 100, y: 100 },
-  },
-];
-
-const initialEdges: any[] = [];
+import { initialEdges, initialNodes } from "../constraints/nodesArrgs";
+import { defaultNode } from "../utils/addNode";
 
 const WorkBoard = () => {
   const [nodes, setNodes] = useState(initialNodes);
@@ -68,7 +54,10 @@ const WorkBoard = () => {
     []
   );
   // Delete objects
-
+  useEffect(() => {
+    setNodes((prev) => [...prev, ...defaultNode.arrayData]);
+    console.log("re render", nodes);
+  }, []);
   const onNodesDelete = useCallback(
     (deleted: any[]) => {
       setEdges(
@@ -111,7 +100,7 @@ const WorkBoard = () => {
         <Background />
 
         <button
-          onClick={() => console.log("working")}
+          onClick={() => defaultNode.defaultNode()}
           style={{ zIndex: 1001 }}
           className="absolute top-8 cursor-pointer btn"
         >

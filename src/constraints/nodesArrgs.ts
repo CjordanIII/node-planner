@@ -12,3 +12,5 @@ export const initialNodes = [
     position: { x: 100, y: 100 },
   },
 ];
+
+export const initialEdges: Array<T> = [];
