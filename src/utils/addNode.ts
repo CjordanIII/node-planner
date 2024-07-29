@@ -17,7 +17,8 @@ export class AddNode {
             
       id: uuidv4(),
       data: { label: "Hello" },
-      position: { x: 0, y: 0 },
+            position: { x: 0, y: 0 },
+      
       type: "input",
     }
       this.arr.push(data)

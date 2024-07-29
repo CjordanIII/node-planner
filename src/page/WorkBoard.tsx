@@ -47,12 +47,14 @@ const WorkBoard = () => {
   const onEdgesChange = useCallback(
     (changes: EdgeChange<any>[]) =>
       setEdges((eds) => applyEdgeChanges(changes, eds)),
-    []
+    [defaultNode.arrayData]
   );
-  const onConnect = useCallback((params: any) => {
-    setEdges((eds) => addEdge(params, eds));
-    console.log(params);
-  }, []);
+  const onConnect = useCallback(
+    (params: any) => {
+      setEdges((eds) => addEdge(params, eds));
+    },
+    [defaultNode.arrayData]
+  );
   // Delete objects
   useEffect(() => {
     setNodes((prev) => [...prev, ...defaultNode.arrayData]);
@@ -61,8 +63,6 @@ const WorkBoard = () => {
   const handleAddNode = () => {
     defaultNode.defaultNode();
     setNodes((prev) => [...prev, ...defaultNode.arrayData]);
-    onConnect({ source: nodes.id, target: nodes.id });
-    // onEdgesChange(nodes);
   };
 
   const onNodesDelete = useCallback(
