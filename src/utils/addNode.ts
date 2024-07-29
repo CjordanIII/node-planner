@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-interface defaultArr{
+export interface DefaultArr{
     id: string,
     data: { label: string },
     position: { x: number, y: number },
@@ -9,10 +9,11 @@ interface defaultArr{
 
 
 export class AddNode {
-     arr:Array<T> = []
+     arr:Array<DefaultArr> = []
     defaultNode() {
+        console.log("working")
        
-        const data: defaultArr = {
+        const data: DefaultArr = {
             
       id: uuidv4(),
       data: { label: "Hello" },
@@ -23,6 +24,7 @@ export class AddNode {
     
     }
     get arrayData() {
+        
        return this.arr
    }
 }

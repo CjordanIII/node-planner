@@ -19,10 +19,10 @@ import Down from "../assets/icons/Down";
 import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
 import { initialEdges, initialNodes } from "../constraints/nodesArrgs";
-import { defaultNode } from "../utils/addNode";
+import { DefaultArr, defaultNode } from "../utils/addNode";
 
 const WorkBoard = () => {
-  const [nodes, setNodes] = useState(initialNodes);
+  const [nodes, setNodes] = useState<DefaultArr[]>(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
 
   const onNodesChange = useCallback(
@@ -49,15 +49,22 @@ const WorkBoard = () => {
       setEdges((eds) => applyEdgeChanges(changes, eds)),
     []
   );
-  const onConnect = useCallback(
-    (params: any) => setEdges((eds) => addEdge(params, eds)),
-    []
-  );
+  const onConnect = useCallback((params: any) => {
+    setEdges((eds) => addEdge(params, eds));
+    console.log(params);
+  }, []);
   // Delete objects
   useEffect(() => {
     setNodes((prev) => [...prev, ...defaultNode.arrayData]);
     console.log("re render", nodes);
-  }, []);
+  }, [defaultNode.arrayData]);
+  const handleAddNode = () => {
+    defaultNode.defaultNode();
+    setNodes((prev) => [...prev, ...defaultNode.arrayData]);
+    onConnect({ source: nodes.id, target: nodes.id });
+    // onEdgesChange(nodes);
+  };
+
   const onNodesDelete = useCallback(
     (deleted: any[]) => {
       setEdges(
@@ -100,7 +107,7 @@ const WorkBoard = () => {
         <Background />
 
         <button
-          onClick={() => defaultNode.defaultNode()}
+          onClick={handleAddNode}
           style={{ zIndex: 1001 }}
           className="absolute top-8 cursor-pointer btn"
         >
