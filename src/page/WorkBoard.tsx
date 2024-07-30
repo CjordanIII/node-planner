@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Background,
@@ -20,14 +21,13 @@ import Down from "../assets/icons/Down";
 import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
 import { initialEdges, initialNodes } from "../constraints/nodesArrgs";
-import { increment } from "../features/node/nodeSlice";
 import { DefaultArr, defaultNode } from "../utils/addNode";
 import { desider } from "../utils/Desider";
 
 const WorkBoard = () => {
   const [nodes, setNodes] = useState<DefaultArr[]>(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
-  const count = useSelector((state) => state.node.value);
+  const nodeValue = useSelector((state: any) => state.node.value);
   const dispatch = useDispatch();
   // TODO create redux state to keep configuation in sate.
 
@@ -67,7 +67,7 @@ const WorkBoard = () => {
     console.log("re render", nodes);
   }, [defaultNode.arrayData]);
   const handleAddNode = () => {
-    desider("Default Node");
+    desider(nodeValue.nameOfNode);
     setNodes((prev) => [...prev, ...defaultNode.arrayData]);
   };
 
@@ -113,7 +113,9 @@ const WorkBoard = () => {
         <Background />
 
         <button
-          onClick={() => dispatch(increment())}
+          onClick={() => {
+            handleAddNode();
+          }}
           style={{ zIndex: 1001 }}
           className="absolute top-8 cursor-pointer btn"
         >

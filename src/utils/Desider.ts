@@ -1,11 +1,11 @@
 
 import { defaultNode } from './addNode';
 
-export const desider = (type:any) => {
-    if (type == "Default Node") {
+export const desider = (type:string) => {
+    if (type == "Default") {
       defaultNode.defaultNode()
     }
-    if (type == "Connector node") {
+    if (type == "Connector") {
         defaultNode.connectorNode()
     }
 }

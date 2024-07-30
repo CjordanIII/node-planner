@@ -1,11 +1,15 @@
+import { useDispatch } from "react-redux";
+import { nodeSelecter } from "../../features/node/nodeSlice";
+
 const Rectangle = () => {
   // TODO create a class the returns options and settings for nodes
+  const dispatch = useDispatch();
   return (
     <button
       className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
       value="Default"
       onClick={(e) => {
-        console.log(e.target.value);
+        dispatch(nodeSelecter({ nameOfNode: e.target.value }));
       }}
     >
       <svg
