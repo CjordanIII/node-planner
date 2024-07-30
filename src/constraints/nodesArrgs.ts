@@ -3,13 +3,13 @@ export const initialNodes = [
   {
     id: uuidv4(),
     data: { label: "Hello" },
-    position: { x: 0, y: 0 },
+    position: { x: Math.random() * 500, y: Math.random() * 500 },
     type: "input",
   },
   {
     id: uuidv4(),
     data: { label: "World" },
-    position: { x: 100, y: 100 },
+    position: { x: Math.random() * 500, y: Math.random() * 500 },
   },
 ];
 

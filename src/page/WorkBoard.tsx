@@ -16,7 +16,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Down from "../assets/icons/Down";
 import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
@@ -28,7 +28,7 @@ const WorkBoard = () => {
   const [nodes, setNodes] = useState<DefaultArr[]>(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const nodeValue = useSelector((state: any) => state.node.value);
-  const dispatch = useDispatch();
+
   // TODO create redux state to keep configuation in sate.
 
   const onNodesChange = useCallback(
@@ -64,10 +64,9 @@ const WorkBoard = () => {
   // Delete objects
   useEffect(() => {
     setNodes((prev) => [...prev, ...defaultNode.arrayData]);
-    console.log("re render", nodes);
   }, [defaultNode.arrayData]);
   const handleAddNode = () => {
-    desider(nodeValue.nameOfNode);
+    desider(nodeValue);
     setNodes((prev) => [...prev, ...defaultNode.arrayData]);
   };
 
@@ -109,6 +108,7 @@ const WorkBoard = () => {
         edges={edges}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        connectionMode="loose"
       >
         <Background />
 
@@ -119,7 +119,7 @@ const WorkBoard = () => {
           style={{ zIndex: 1001 }}
           className="absolute top-8 cursor-pointer btn"
         >
-          Click to add node
+          Click to add node: {nodeValue}
         </button>
 
         <Controls>

@@ -15,8 +15,7 @@ export class AddNode {
     const data: DefaultArr = {
       id: uuidv4(),
       data: { label: "Hello" },
-      position: { x: 0, y: 0 },
-
+      position: { x: Math.random() * 500, y: Math.random() * 500 },
       type: "input",
     };
     this.arr.push(data);
@@ -25,7 +24,7 @@ export class AddNode {
     const data: DefaultArr = {
       id: uuidv4(),
       data: { label: "World" },
-      position: { x: 100, y: 100 },
+      position: { x: Math.random() * 500, y: Math.random() * 500 },
       type: "",
     };
     this.arr.push(data);

@@ -1,9 +1,10 @@
-import Rectangle from "../../../../assets/icons/Rectangle";
-
+import DeafultNode from "../DeafultNode";
+import NodeWithTwoEdges from "../NodeWithTwoEdges";
 const NodeMenu = () => {
   return (
     <div>
-      <Rectangle />
+      <DeafultNode />
+      <NodeWithTwoEdges />
     </div>
   );
 };
