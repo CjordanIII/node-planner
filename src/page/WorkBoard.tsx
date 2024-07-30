@@ -29,7 +29,7 @@ const WorkBoard = () => {
   const [edges, setEdges] = useState(initialEdges);
   const count = useSelector((state) => state.node.value);
   const dispatch = useDispatch();
-  // TODO create redux state to keep configuation in sate.
+  // TODO keep configuation in sate.
 
   const onNodesChange = useCallback(
     (
