@@ -14,30 +14,22 @@ import {
   getOutgoers,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useCallback, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Down from "../assets/icons/Down";
 import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
-const initialNodes = [
-  {
-    id: uuidv4(),
-    data: { label: "Hello" },
-    position: { x: 0, y: 0 },
-    type: "input",
-  },
-  {
-    id: uuidv4(),
-    data: { label: "World" },
-    position: { x: 100, y: 100 },
-  },
-];
-
-const initialEdges: any[] = [];
+import { initialEdges, initialNodes } from "../constraints/nodesArrgs";
+import { increment } from "../features/node/nodeSlice";
+import { DefaultArr, defaultNode } from "../utils/addNode";
+import { desider } from "../utils/Desider";
 
 const WorkBoard = () => {
-  const [nodes, setNodes] = useState(initialNodes);
+  const [nodes, setNodes] = useState<DefaultArr[]>(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  const count = useSelector((state) => state.node.value);
+  const dispatch = useDispatch();
+  // TODO create redux state to keep configuation in sate.
 
   const onNodesChange = useCallback(
     (
@@ -61,13 +53,23 @@ const WorkBoard = () => {
   const onEdgesChange = useCallback(
     (changes: EdgeChange<any>[]) =>
       setEdges((eds) => applyEdgeChanges(changes, eds)),
-    []
+    [defaultNode.arrayData]
   );
   const onConnect = useCallback(
-    (params: any) => setEdges((eds) => addEdge(params, eds)),
-    []
+    (params: any) => {
+      setEdges((eds) => addEdge(params, eds));
+    },
+    [defaultNode.arrayData]
   );
   // Delete objects
+  useEffect(() => {
+    setNodes((prev) => [...prev, ...defaultNode.arrayData]);
+    console.log("re render", nodes);
+  }, [defaultNode.arrayData]);
+  const handleAddNode = () => {
+    desider("Default Node");
+    setNodes((prev) => [...prev, ...defaultNode.arrayData]);
+  };
 
   const onNodesDelete = useCallback(
     (deleted: any[]) => {
@@ -111,7 +113,7 @@ const WorkBoard = () => {
         <Background />
 
         <button
-          onClick={() => console.log("working")}
+          onClick={() => dispatch(increment())}
           style={{ zIndex: 1001 }}
           className="absolute top-8 cursor-pointer btn"
         >
