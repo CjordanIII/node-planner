@@ -15,16 +15,20 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Down from "../assets/icons/Down";
 import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
 import { initialEdges, initialNodes } from "../constraints/nodesArrgs";
+import { increment } from "../features/node/nodeSlice";
 import { DefaultArr, defaultNode } from "../utils/addNode";
 import { desider } from "../utils/Desider";
 
 const WorkBoard = () => {
   const [nodes, setNodes] = useState<DefaultArr[]>(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  const count = useSelector((state) => state.node.value);
+  const dispatch = useDispatch();
   // TODO create redux state to keep configuation in sate.
 
   const onNodesChange = useCallback(
@@ -109,7 +113,7 @@ const WorkBoard = () => {
         <Background />
 
         <button
-          onClick={handleAddNode}
+          onClick={() => dispatch(increment())}
           style={{ zIndex: 1001 }}
           className="absolute top-8 cursor-pointer btn"
         >
