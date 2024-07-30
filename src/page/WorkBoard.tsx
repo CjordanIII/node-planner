@@ -20,10 +20,12 @@ import Up from "../assets/icons/Up";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
 import { initialEdges, initialNodes } from "../constraints/nodesArrgs";
 import { DefaultArr, defaultNode } from "../utils/addNode";
+import { desider } from "../utils/Desider";
 
 const WorkBoard = () => {
   const [nodes, setNodes] = useState<DefaultArr[]>(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  // TODO create redux state to keep configuation in sate.
 
   const onNodesChange = useCallback(
     (
@@ -61,7 +63,7 @@ const WorkBoard = () => {
     console.log("re render", nodes);
   }, [defaultNode.arrayData]);
   const handleAddNode = () => {
-    defaultNode.defaultNode();
+    desider("Default Node");
     setNodes((prev) => [...prev, ...defaultNode.arrayData]);
   };
 
