@@ -19,6 +19,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Down from "../assets/icons/Down";
 import Up from "../assets/icons/Up";
+import NodeInput from "../components/workbench/bottom_work_bench/NodeInput";
 import Workbench from "../components/workbench/bottom_work_bench/Workbench";
 import { initialEdges, initialNodes } from "../constraints/nodesArrgs";
 import { DefaultArr, defaultNode } from "../utils/addNode";
@@ -27,6 +28,7 @@ import { desider } from "../utils/Desider";
 const WorkBoard = () => {
   const [nodes, setNodes] = useState<DefaultArr[]>(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  const [showNodeInput, setShowNodeInput] = useState(false);
   const nodeValue = useSelector((state: any) => state.node.value);
 
   // TODO create redux state to keep configuation in sate.
@@ -48,7 +50,7 @@ const WorkBoard = () => {
           }
       >[]
     ) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    []
+    [defaultNode.arrayData]
   );
   const onEdgesChange = useCallback(
     (changes: EdgeChange<any>[]) =>
@@ -96,6 +98,15 @@ const WorkBoard = () => {
     },
     [nodes, edges]
   );
+  const onNodeClick = useCallback(
+    (event: React.MouseEvent, node: Node) => {
+      console.log(node);
+      if (node.data.selected) {
+        setShowNodeInput((prev) => !prev);
+      }
+    },
+    [defaultNode.arrayData]
+  );
 
   const [isWorkbench, setIsWorkbench] = useState(false);
 
@@ -104,14 +115,16 @@ const WorkBoard = () => {
       <ReactFlow
         onNodesDelete={onNodesDelete}
         nodes={nodes}
+        onNodeClick={onNodeClick}
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        colorMode="system"
         connectionMode="loose"
       >
         <Background />
-
+        <NodeInput />;
         <button
           onClick={() => {
             handleAddNode();
@@ -121,7 +134,6 @@ const WorkBoard = () => {
         >
           Click to add node: {nodeValue}
         </button>
-
         <Controls>
           <ControlButton onClick={() => setIsWorkbench((prev) => !prev)}>
             {isWorkbench ? <Down /> : <Up />}

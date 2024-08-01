@@ -32,6 +32,9 @@ export class AddNode {
   get arrayData() {
     return this.arr;
   }
+  // get position() {
+  //   return
+  // }
 }
 
 export const defaultNode = new AddNode();
